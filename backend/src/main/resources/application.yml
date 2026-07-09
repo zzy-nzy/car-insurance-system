@@ -1,0 +1,48 @@
+# ===================================================
+# 自動車保険見積システム アプリケーション設定
+# データベースは PostgreSQL 16 を使用（Docker Compose で起動）。
+# ===================================================
+
+# サーバー設定
+server:
+  port: 8080 # アプリケーションの待受ポート
+
+# Spring Framework 設定
+spring:
+  # JSONシリアライズ設定
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false # 日付をタイムスタンプではなくISO形式で出力
+    date-format: yyyy-MM-dd'T'HH:mm:ss # 日付フォーマット
+
+  # データベース接続設定（PostgreSQL）
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/insurance_quote} # 環境変数から取得、デフォルトはlocalhost
+    username: ${SPRING_DATASOURCE_USERNAME:insurance} # DBユーザー名
+    password: ${SPRING_DATASOURCE_PASSWORD:insurance_pass} # DBパスワード
+    driver-class-name: org.postgresql.Driver # PostgreSQL JDBCドライバー
+
+  # JPA / Hibernate 設定
+  jpa:
+    hibernate:
+      ddl-auto: none # 本番環境ではスキーマ自動生成を無効化
+    show-sql: false # SQLログ出力を無効化
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect # PostgreSQL用方言
+
+# アプリケーション固有設定
+app:
+  jwt:
+    secret: "InsuranceQuoteSecretKey2026MustBeAtLeast256BitsLongForHS256" # JWT署名用シークレットキー（HMAC-SHA256）
+    expiration-ms: 86400000 # トークン有効期限（ミリ秒）= 24時間
+  admin:
+    default-username: admin # デフォルト管理者ユーザー名
+    default-password: admin123 # デフォルト管理者パスワード
+
+# Swagger / OpenAPI ドキュメント設定
+springdoc:
+  api-docs:
+    path: /api-docs # OpenAPI JSONのエンドポイント
+  swagger-ui:
+    path: /swagger-ui.html # Swagger UIのパス

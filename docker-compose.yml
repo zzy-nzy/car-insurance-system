@@ -1,0 +1,65 @@
+# ===================================================
+# 自動車保険見積システム Docker Compose 設定
+# 以下の3サービスを起動:
+#   db      - PostgreSQL 16 データベース
+#   backend - Spring Boot バックエンド API
+#   frontend- フロントエンド (Nginx 静的配信)
+# ===================================================
+
+services:
+
+  # ---------------------------------------------------
+  # データベースサービス（PostgreSQL 16）
+  # ---------------------------------------------------
+  db:
+    image: postgres:16                                # PostgreSQL 16 の公式イメージ
+    container_name: insurance-db                      # コンテナ名
+    environment:
+      POSTGRES_DB: insurance_quote                    # 作成するデータベース名
+      POSTGRES_USER: insurance                        # DBユーザー名
+      POSTGRES_PASSWORD: insurance_pass               # DBパスワード
+    ports:
+      - "5432:5432"                                   # ホスト:コンテナのポートフォワード
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql # 初期化SQL（コンテナ初回起動時に実行）
+      - pgdata:/var/lib/postgresql/data               # データ永続化用ボリューム
+    healthcheck:                                      # ヘルスチェック設定
+      test: ["CMD-SHELL", "pg_isready -U insurance -d insurance_quote"] # PostgreSQLの稼働確認
+      interval: 5s                                    # チェック間隔
+      timeout: 3s                                     # タイムアウト
+      retries: 5                                      # リトライ回数
+
+  # ---------------------------------------------------
+  # バックエンドサービス（Spring Boot API）
+  # ---------------------------------------------------
+  backend:
+    build:
+      context: ./backend                              # ビルドコンテキスト（バックエンドのソースディレクトリ）
+      dockerfile: Dockerfile                          # Dockerfile のパス
+    container_name: insurance-backend                 # コンテナ名
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/insurance_quote # DB接続URL（コンテナ間は db で参照）
+      SPRING_DATASOURCE_USERNAME: insurance           # DBユーザー名
+      SPRING_DATASOURCE_PASSWORD: insurance_pass      # DBパスワード
+    ports:
+      - "8080:8080"                                   # ホスト:コンテナのポートフォワード
+    depends_on:
+      db:
+        condition: service_healthy                    # DBのヘルスチェック合格後に起動
+
+  # ---------------------------------------------------
+  # フロントエンドサービス（Nginx 静的配信）
+  # ---------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend                             # ビルドコンテキスト（フロントエンドのソースディレクトリ）
+      dockerfile: Dockerfile                          # Dockerfile のパス
+    container_name: insurance-frontend                # コンテナ名
+    ports:
+      - "3000:80"                                     # ホスト3000番をコンテナのNginx 80番にマッピング
+    depends_on:
+      - backend                                       # バックエンドの起動後に起動
+
+# データ永続化用の名前付きボリューム
+volumes:
+  pgdata:                                             # PostgreSQLデータ保存用ボリューム

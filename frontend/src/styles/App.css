@@ -1,0 +1,111 @@
+/* ============================================================
+   自動車保険見積システム - グローバルスタイル
+   ============================================================ */
+
+/* --- リセット --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* --- ベーススタイル --- */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* アプリケーション全体のコンテナ。フレックスボックスで縦方向にレイアウト */
+.app-container { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* --- ヘッダー --- */
+.app-header {
+  background: #1a365d;
+  color: #fff;
+  padding: 16px 24px;
+  text-align: center;
+}
+.app-header h1 { font-size: 1.5rem; font-weight: 700; }
+
+/* メインコンテンツエリア。中央寄せ */
+.app-main { flex: 1; display: flex; justify-content: center; padding: 32px 16px; }
+
+/* --- カード形式のページコンテナ --- */
+.page-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 32px;
+  width: 100%;
+  max-width: 560px;
+}
+.page-card h2 { font-size: 1.3rem; margin-bottom: 20px; color: #1a365d; }
+.page-card h3 { font-size: 1.1rem; margin: 20px 0 12px; color: #1a365d; }
+.page-card p { margin-bottom: 16px; color: #666; }
+
+/* --- フォーム要素 --- */
+label { display: block; margin-top: 14px; margin-bottom: 4px; font-weight: 600; font-size: 0.9rem; }
+
+/* テキスト入力・数値入力・セレクトボックス */
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+input:focus, select:focus { outline: none; border-color: #1a365d; box-shadow: 0 0 0 2px rgba(26,54,93,0.15); }
+
+/* --- ラジオボタングループ --- */
+.radio-group { display: flex; gap: 24px; margin-top: 6px; }
+.radio-group label { font-weight: 400; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+/* --- ボタングループ --- */
+.button-group { display: flex; gap: 12px; margin-top: 24px; }
+
+/* プライマリボタン（メインアクション用） */
+.btn-primary {
+  background: #1a365d;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+.btn-primary:hover { background: #2c5282; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,54,93,0.3); }
+.btn-primary:disabled { background: #a0aec0; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* セカンダリボタン（戻るなど補助アクション用） */
+.btn-secondary {
+  background: #e2e8f0;
+  color: #333;
+  border: 2px solid #cbd5e0;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+.btn-secondary:hover { background: #edf2f7; border-color: #a0aec0; transform: translateY(-1px); }
+
+/* --- 確認画面の行表示 --- */
+.confirm-row { display: flex; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.confirm-label { width: 140px; font-weight: 600; color: #555; flex-shrink: 0; }
+.confirm-value { flex: 1; }
+
+/* --- 見積結果の表示ボックス --- */
+.result-box { background: #f0f4ff; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+.result-item { display: flex; justify-content: space-between; padding: 8px 0; }
+.result-item.highlight .result-value { font-size: 1.4rem; font-weight: 700; color: #1a365d; }
+.result-label { color: #555; }
+.result-value { font-weight: 600; }
+
+/* --- 内訳テーブル --- */
+.breakdown-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.breakdown-table th { background: #f7fafc; text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; }
+.breakdown-table td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
