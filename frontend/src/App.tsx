@@ -72,6 +72,7 @@ export default function App() {
         )}
 
         {/* ---- ユーザー向け見積フロー ---- */}
+        {step >= 0 && step <= 6 && (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Stepper currentStep={step} />
 
@@ -128,6 +129,7 @@ export default function App() {
         {/* ステップ6: 見積結果表示 */}
         {step === 6 && result && <QuoteResult data={result} onReset={reset} />}
         </div>
+        )}
       </main>
     </div>
   );
