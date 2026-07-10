@@ -2,110 +2,399 @@
    自動車保険見積システム - グローバルスタイル
    ============================================================ */
 
-/* --- リセット --- */
+/* --- Reset --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* --- ベーススタイル --- */
+/* --- Base --- */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f5f7fa;
-  color: #333;
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans CJK JP', sans-serif;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8edf5 100%);
+  color: #2d3748;
+  line-height: 1.7;
+  min-height: 100vh;
 }
 
-/* アプリケーション全体のコンテナ。フレックスボックスで縦方向にレイアウト */
 .app-container { min-height: 100vh; display: flex; flex-direction: column; }
 
-/* --- ヘッダー --- */
+/* --- Header --- */
 .app-header {
-  background: #1a365d;
+  background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
   color: #fff;
-  padding: 16px 24px;
+  padding: 20px 24px;
   text-align: center;
+  box-shadow: 0 2px 12px rgba(26,54,93,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.app-header h1 { font-size: 1.5rem; font-weight: 700; }
+.app-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.app-header p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+  margin-bottom: 0;
+}
 
-/* メインコンテンツエリア。中央寄せ */
-.app-main { flex: 1; display: flex; justify-content: center; padding: 32px 16px; }
+/* --- Main --- */
+.app-main { flex: 1; display: flex; justify-content: center; padding: 40px 16px; }
 
-/* --- カード形式のページコンテナ --- */
+/* --- Page Card --- */
 .page-card {
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 36px;
   width: 100%;
-  max-width: 560px;
+  max-width: 600px;
+  transition: box-shadow 0.3s;
 }
-.page-card h2 { font-size: 1.3rem; margin-bottom: 20px; color: #1a365d; }
-.page-card h3 { font-size: 1.1rem; margin: 20px 0 12px; color: #1a365d; }
-.page-card p { margin-bottom: 16px; color: #666; }
+.page-card:hover { box-shadow: 0 6px 32px rgba(0,0,0,0.12); }
+.page-card h2 {
+  font-size: 1.35rem;
+  margin-bottom: 24px;
+  color: #1a365d;
+  border-bottom: 3px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+.page-card h3 { font-size: 1.1rem; margin: 24px 0 12px; color: #1a365d; }
+.page-card p { margin-bottom: 16px; color: #718096; }
+.page-card p:last-child { margin-bottom: 0; }
 
-/* --- フォーム要素 --- */
-label { display: block; margin-top: 14px; margin-bottom: 4px; font-weight: 600; font-size: 0.9rem; }
+/* --- Stepper --- */
+.stepper {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 28px;
+  padding: 0 4px;
+}
+.stepper-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #a0aec0;
+  background: #f7fafc;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.stepper-step.active {
+  color: #fff;
+  background: #1a365d;
+  box-shadow: 0 2px 8px rgba(26,54,93,0.25);
+}
+.stepper-step.completed {
+  color: #fff;
+  background: #48bb78;
+}
+.stepper-step .step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(0,0,0,0.12);
+}
+.stepper-step.active .step-num,
+.stepper-step.completed .step-num {
+  background: rgba(255,255,255,0.25);
+}
 
-/* テキスト入力・数値入力・セレクトボックス */
+/* --- Form Elements --- */
+label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #4a5568;
+}
+label:first-child { margin-top: 0; }
+
 input[type="text"],
 input[type="number"],
+input[type="password"],
 select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
+  padding: 11px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+  transition: all 0.25s;
+  color: #2d3748;
 }
-input:focus, select:focus { outline: none; border-color: #1a365d; box-shadow: 0 0 0 2px rgba(26,54,93,0.15); }
+input:focus, select:focus {
+  outline: none;
+  border-color: #1a365d;
+  box-shadow: 0 0 0 3px rgba(26,54,93,0.12);
+}
+input::placeholder { color: #cbd5e0; }
 
-/* --- ラジオボタングループ --- */
-.radio-group { display: flex; gap: 24px; margin-top: 6px; }
-.radio-group label { font-weight: 400; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+/* --- Radio Group --- */
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.radio-group label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s;
+  margin-top: 0;
+}
+.radio-group label:hover { border-color: #a0aec0; background: #f7fafc; }
+.radio-group input[type="radio"]:checked + *,
+.radio-group label:has(input:checked) {
+  border-color: #1a365d;
+  background: #ebf4ff;
+  color: #1a365d;
+}
+.radio-group input[type="radio"] { accent-color: #1a365d; }
 
-/* --- ボタングループ --- */
-.button-group { display: flex; gap: 12px; margin-top: 24px; }
+/* --- Button Group --- */
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+.button-group .btn-primary,
+.button-group .btn-secondary {
+  flex: 1;
+  text-align: center;
+}
 
-/* プライマリボタン（メインアクション用） */
+/* --- Primary Button --- */
 .btn-primary {
-  background: #1a365d;
+  background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
   color: #fff;
   border: none;
-  padding: 12px 24px;
+  padding: 12px 28px;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s;
   font-weight: 600;
+  letter-spacing: 0.03em;
 }
-.btn-primary:hover { background: #2c5282; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,54,93,0.3); }
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2a4a7f 0%, #3a5a9f 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26,54,93,0.35);
+}
+.btn-primary:active { transform: translateY(0); }
 .btn-primary:disabled { background: #a0aec0; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* セカンダリボタン（戻るなど補助アクション用） */
+/* --- Secondary Button --- */
 .btn-secondary {
-  background: #e2e8f0;
-  color: #333;
-  border: 2px solid #cbd5e0;
-  padding: 12px 24px;
+  background: #edf2f7;
+  color: #4a5568;
+  border: 2px solid #e2e8f0;
+  padding: 12px 28px;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s;
   font-weight: 600;
 }
-.btn-secondary:hover { background: #edf2f7; border-color: #a0aec0; transform: translateY(-1px); }
+.btn-secondary:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.btn-secondary:active { transform: translateY(0); }
 
-/* --- 確認画面の行表示 --- */
-.confirm-row { display: flex; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
-.confirm-label { width: 140px; font-weight: 600; color: #555; flex-shrink: 0; }
-.confirm-value { flex: 1; }
+/* --- Confirm Page --- */
+.confirm-row {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f4f8;
+}
+.confirm-row:last-child { border-bottom: none; }
+.confirm-label {
+  width: 150px;
+  font-weight: 600;
+  color: #718096;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+.confirm-value { flex: 1; color: #2d3748; font-weight: 500; }
 
-/* --- 見積結果の表示ボックス --- */
-.result-box { background: #f0f4ff; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
-.result-item { display: flex; justify-content: space-between; padding: 8px 0; }
-.result-item.highlight .result-value { font-size: 1.4rem; font-weight: 700; color: #1a365d; }
-.result-label { color: #555; }
-.result-value { font-weight: 600; }
+/* --- Result Box --- */
+.result-box {
+  background: linear-gradient(135deg, #ebf4ff 0%, #f0f4ff 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid #d6e4ff;
+}
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(26,54,93,0.08);
+}
+.result-item:last-child { border-bottom: none; }
+.result-item.highlight .result-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1a365d;
+}
+.result-label { color: #4a5568; font-weight: 500; }
+.result-value { font-weight: 600; font-size: 1.05rem; }
 
-/* --- 内訳テーブル --- */
-.breakdown-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-.breakdown-table th { background: #f7fafc; text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; }
-.breakdown-table td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+/* --- Breakdown Table --- */
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.breakdown-table th {
+  background: #f7fafc;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 700;
+}
+.breakdown-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f4f8;
+  font-size: 0.9rem;
+}
+.breakdown-table tr:last-child td { border-bottom: none; }
+.breakdown-table tr:hover td { background: #f7fafc; }
+
+/* --- Admin Table --- */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.admin-table th {
+  background: #f7fafc;
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 2px solid #e2e8f0;
+  font-weight: 700;
+  color: #4a5568;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #f0f4f8;
+}
+.admin-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.admin-table tbody tr:hover { background: #f0f4ff; }
+
+/* --- Top Page --- */
+.top-page {
+  text-align: center;
+  padding: 20px 0;
+}
+.top-page .site-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+.top-page h2 {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 12px;
+}
+.top-page p {
+  font-size: 0.95rem;
+  color: #718096;
+  margin-bottom: 8px;
+  line-height: 1.8;
+}
+.top-page .top-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 28px;
+}
+.top-page .top-buttons button {
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 1.05rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-weight: 700;
+  border: none;
+}
+.top-page .btn-user {
+  background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
+  color: #fff;
+}
+.top-page .btn-user:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26,54,93,0.35);
+}
+.top-page .btn-admin {
+  background: #edf2f7;
+  color: #4a5568;
+  border: 2px solid #e2e8f0;
+}
+.top-page .btn-admin:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+  .app-main { padding: 20px 12px; }
+  .page-card { padding: 24px 16px; border-radius: 8px; }
+  .stepper { gap: 2px; }
+  .stepper-step { padding: 4px 8px; font-size: 0.7rem; }
+  .stepper-step .step-label { display: none; }
+  .radio-group { flex-direction: column; gap: 8px; }
+  .radio-group label { width: 100%; justify-content: center; }
+  .confirm-row { flex-direction: column; gap: 4px; }
+  .confirm-label { width: auto; }
+  .result-item { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .top-page .top-buttons button { padding: 14px 20px; font-size: 1rem; }
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f0f4f8; }
+::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+
+/* --- Fade-in animation --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-card { animation: fadeIn 0.35s ease-out; }

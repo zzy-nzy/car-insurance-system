@@ -17,6 +17,7 @@ import QuoteResult from './components/QuoteResult';
 import AdminLogin from './components/AdminLogin';
 import QuoteList from './components/QuoteList';
 import QuoteDetail from './components/QuoteDetail';
+import Stepper from './components/Stepper';
 
 /** フォームの初期値 */
 const emptyForm: FormData = {
@@ -71,6 +72,8 @@ export default function App() {
         )}
 
         {/* ---- ユーザー向け見積フロー ---- */}
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Stepper currentStep={step} />
 
         {/* トップページ */}
         {step === 0 && (
@@ -124,6 +127,7 @@ export default function App() {
         )}
         {/* ステップ6: 見積結果表示 */}
         {step === 6 && result && <QuoteResult data={result} onReset={reset} />}
+        </div>
       </main>
     </div>
   );
